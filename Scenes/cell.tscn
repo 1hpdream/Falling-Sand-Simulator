@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0l3bt10qmmx6"]
+
+[ext_resource type="Script" path="res://Scripts/Cell.gd" id="1_umpgu"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_676tc"]
+
+[node name="Cell" type="Node2D"]
+scale = Vector2(10, 10)
+script = ExtResource("1_umpgu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("CanvasTexture_676tc")
