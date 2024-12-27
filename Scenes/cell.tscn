@@ -7,6 +7,7 @@
 [node name="Cell" type="Node2D"]
 scale = Vector2(10, 10)
 script = ExtResource("1_umpgu")
+cellType = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("CanvasTexture_676tc")
