@@ -58,9 +58,9 @@ func UpdateSandCells(x, y):
 			cellsBufferArray[x][y + 1].cellType = 1
 			cellsBufferArray[x][y + 1].cellColor = Color.YELLOW
 
-		elif x < sizeX - 1 and x > 0:
+		elif x < sizeX - 1 or x > -1:
 			# if both the left and right of a cell below the current cell is open, move to either of those.
-			if cells[x][y + 1].cellType == 1 and (cells[x - 1][y + 1].cellType == 0 and cells[x + 1][y + 1].cellType == 0):
+			if x < sizeX - 1 and x > -1 and cells[x][y + 1].cellType == 1 and (cells[x - 1][y + 1].cellType == 0 and cells[x + 1][y + 1].cellType == 0):
 				var direction = randf_range(0, 1)
 				if direction > .5:
 					cells[x][y].cellType = 0
@@ -68,22 +68,23 @@ func UpdateSandCells(x, y):
 
 					cellsBufferArray[x + 1][y + 1].cellType = 1
 					cellsBufferArray[x + 1][y + 1].cellColor = Color.YELLOW
+
 				else:
 					cells[x][y].cellType = 0
 					cells[x][y].cellColor = Color.LIGHT_BLUE
 					
 					cellsBufferArray[x - 1][y + 1].cellType = 1
 					cellsBufferArray[x - 1][y + 1].cellColor = Color.YELLOW
-			
+					
 			# if the cell to the left of the cell below the current cell is open, move there. 
-			elif cells[x][y + 1].cellType == 1 and cells[x - 1][y + 1].cellType == 0 and !cells[x + 1][y + 1].cellType == 0:
+			elif  x > 0 and cells[x][y + 1].cellType == 1 and cells[x - 1][y + 1].cellType == 0:
 					cells[x][y].cellType = 0
 					cells[x][y].cellColor = Color.LIGHT_BLUE
 					
 					cellsBufferArray[x - 1][y + 1].cellType = 1
 					cellsBufferArray[x - 1][y + 1].cellColor = Color.YELLOW
 							
-			elif cells[x][y + 1].cellType == 1 and cells[x + 1][y + 1].cellType == 0 and !cells[x - 1][y + 1].cellType == 0:
+			elif x < sizeX - 1 and cells[x][y + 1].cellType == 1 and cells[x + 1][y + 1].cellType == 0:
 					cells[x][y].cellType = 0
 					cells[x][y].cellColor = Color.LIGHT_BLUE
 					
