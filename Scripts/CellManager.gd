@@ -16,7 +16,6 @@ var cellsBufferArray : Array = []
 
 # spawn area variables
 var spawnArea = 4
-
 # timer variables
 var waitTime : float = .2
 var waitTimeCur : float = 0
@@ -58,8 +57,8 @@ func SpawnCells():
 		
 		var halfSize = spawnArea / 2
 		
-		for xNew in range(-halfSize, halfSize):
-			for yNew in range(-halfSize, halfSize):
+		for xNew in range(-halfSize, halfSize + 1):
+			for yNew in range(-halfSize, halfSize + 1):
 				# makes sure the spawn region is within the bounds of the array.
 				if (xPos + xNew < sizeX  - 1 and xPos + xNew > 0) and (yPos + yNew < sizeY and yPos + yNew > 0) and cellsBufferArray[xPos + xNew][yPos + yNew].cellType == 0:
 					cellsBufferArray[xPos + xNew][yPos + yNew].cellType = 1
@@ -67,61 +66,43 @@ func SpawnCells():
 
 func UpdateCells(delta):
 
-	# Process rows bottom-to-top
+	# Process rows bottom to top
 	for y in range(sizeY - 1, -1, -1):
-
 			for x in range(sizeX):
 				if cells[x][y].cellType == 1:
 					UpdateSandCells(x, y)
-
 
 func UpdateSandCells(x, y):
 	# check if the cell isn't at the border.
 	if y < sizeY - 1:
 		# check the cell below the current, and if it is an air cell change the buffer equivalant to a sand cell.
 		if cells[x][y + 1].cellType == 0:
-			# reset current cell
-			#cells[x][y].cellType = 0
-			#cells[x][y].cellColor = Color.LIGHT_BLUE
-			
 			cellsBufferArray[x][y + 1].cellType = 1
 			cellsBufferArray[x][y + 1].cellColor = Color.YELLOW
-
-	
 
 		elif x < sizeX - 1 or x > 0:
 			# if both the left and right of a cell below the current cell is open, move to either of those.
 			if x < sizeX - 1 and x > 0 and (cells[x - 1][y + 1].cellType == 0 and cells[x + 1][y + 1].cellType == 0):
 				var direction = randf_range(0, 1)
 				if direction < .51:
-					#cells[x][y].cellType = 0
-					#cells[x][y].cellColor = Color.LIGHT_BLUE
-
 					cellsBufferArray[x + 1][y + 1].cellType = 1
 					cellsBufferArray[x + 1][y + 1].cellColor = Color.YELLOW
 
-				else:
-					#cells[x][y].cellType = 0
-					#cells[x][y].cellColor = Color.LIGHT_BLUE
-					
+				else:				
 					cellsBufferArray[x - 1][y + 1].cellType = 1
 					cellsBufferArray[x - 1][y + 1].cellColor = Color.YELLOW
 					
 			# if the cell to the left of the cell below the current cell is open, move there. 
-			elif  x > 0 and cells[x - 1][y + 1].cellType == 0:
-					#cells[x][y].cellType = 0
-					#cells[x][y].cellColor = Color.LIGHT_BLUE
-					
+			elif  x > 0 and cells[x - 1][y + 1].cellType == 0:				
 					cellsBufferArray[x - 1][y + 1].cellType = 1
 					cellsBufferArray[x - 1][y + 1].cellColor = Color.YELLOW
 					
 			# if the cell to the right of the cell below the current cell is open, move there. 				
-			elif x < sizeX - 1 and cells[x + 1][y + 1].cellType == 0:
-					#cells[x][y].cellType = 0
-					#cells[x][y].cellColor = Color.LIGHT_BLUE
-					
+			elif x < sizeX - 1 and cells[x + 1][y + 1].cellType == 0:					
 					cellsBufferArray[x + 1][y + 1].cellType = 1
 					cellsBufferArray[x + 1][y + 1].cellColor = Color.YELLOW
+
+			# default for if the cell can't move in any direction		
 			else:
 				cellsBufferArray[x][y].cellType = 1
 				cellsBufferArray[x][y].cellColor = Color.YELLOW
