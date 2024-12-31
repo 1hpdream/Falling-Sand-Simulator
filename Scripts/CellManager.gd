@@ -42,7 +42,7 @@ func _init():
 func _process(delta):
 		SpawnCells()
 
-		UpdateCells(delta)
+		UpdateCells()
 
 		SwapArrays()
 		
@@ -64,7 +64,7 @@ func SpawnCells():
 					cellsBufferArray[xPos + xNew][yPos + yNew].cellType = 1
 					cellsBufferArray[xPos + xNew][yPos + yNew].cellColor = Color.YELLOW
 
-func UpdateCells(delta):
+func UpdateCells():
 
 	# Process rows bottom to top
 	for y in range(sizeY - 1, -1, -1):
